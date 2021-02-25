@@ -60,7 +60,7 @@ def read_data():
     data = {
         "Temperature": temp,
         "pcpuTemperature": pcpuTem,
-        "tpoHumidity": tpoTemp,
+        "tpoTemperature": tpoTemp,
         "Humidity": hum,
         "pcpuHumidity": pcpuHum,
         "tpoHumidity": tpoHum
