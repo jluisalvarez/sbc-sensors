@@ -44,8 +44,23 @@ def read_data():
     pcpuHum = round((Sum/total),2)
     tpoHum = t2-t1
 
+    t1 = time.perf_counter()
+    temp = readTemperature()
+    t2 = time.perf_counter()
+    cpu_percents = []
+    for iter in range(10):
+        cpu_percents.append(monitor_cpu(target=readTemperature))
+    Sum = sum(cpu_percents)
+    total = len(cpu_percents)
+    pcpuTem = round((Sum/total),2)
+    tpoTemp = t2-t1
+
+
 
     data = {
+        "Temperature": temp,
+        "pcpuTemperature": pcpuTem,
+        "tpoHumidity": tpoTemp,
         "Humidity": hum,
         "pcpuHumidity": pcpuHum,
         "tpoHumidity": tpoHum
