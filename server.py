@@ -47,11 +47,13 @@ def readDistance():
         if GPIO.input(ECHO) == GPIO.LOW:
             break
 
+    GPIO.cleanup()
     # Tiempo medido en segundos
     duracion = pulso_fin - pulso_inicio
 
     # Obtenemos la distancia considerando que la señal recorre dos veces la distancia a medir y que la velocidad del sonido es 343m/s
     distancia = (34300 * duracion) / 2
+
 
     return distancia
 
