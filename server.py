@@ -46,9 +46,9 @@ def read_data():
     tpoTemp = round((t2-t1),2)
 
     TempSensor = {
-        "Temperature": temp,
-        "pcpuTemperature": pcpuTem,
-        "tpoTemperature": tpoTemp,
+        "value": temp,
+        "cpu": pcpuTem,
+        "time": tpoTemp,
     }
 
     t1 = time.perf_counter()
@@ -63,12 +63,10 @@ def read_data():
     tpoHum = round((t2-t1),2)
 
     HumSensor = {
-        "Humidity": hum,
-        "pcpuHumidity": pcpuHum,
-        "tpoHumidity": tpoHum
+        "value": hum,
+        "cpu": pcpuHum,
+        "time": tpoHum
     }
-
-
 
 
     data = {
