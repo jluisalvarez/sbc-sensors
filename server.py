@@ -12,14 +12,14 @@ import RPi.GPIO as GPIO
 # Ultrasonic Sensor HC-SR04
 # GPIO
 # PIN: RBPi --> TRIG=25, ECHO=24     BBB -->
+TRIG = 25
+ECHO = 24
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(TRIG, GPIO.OUT)
+GPIO.setup(ECHO, GPIO.IN)
+
 def readDistance():
-    TRIG = 25
-    ECHO = 24
-
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(TRIG, GPIO.OUT)
-    GPIO.setup(ECHO, GPIO.IN)
-
     # Ponemos en bajo el pin TRIG y después esperamos 0.5 seg para que el transductor se estabilice
     GPIO.output(TRIG, GPIO.LOW)
     time.sleep(0.5)
@@ -31,7 +31,6 @@ def readDistance():
 
     # En este momento el sensor envía 8 pulsos ultrasónicos de 40kHz y coloca su pin ECHO en alto
     # Debemos detectar dicho evento para iniciar la medición del tiempo
-
     while True:
         pulso_inicio = time.time()
         if GPIO.input(ECHO) == GPIO.HIGH:
@@ -47,13 +46,11 @@ def readDistance():
         if GPIO.input(ECHO) == GPIO.LOW:
             break
 
-    GPIO.cleanup()
     # Tiempo medido en segundos
     duracion = pulso_fin - pulso_inicio
 
     # Obtenemos la distancia considerando que la señal recorre dos veces la distancia a medir y que la velocidad del sonido es 343m/s
     distancia = (34300 * duracion) / 2
-
 
     return distancia
 
@@ -187,4 +184,5 @@ if __name__ == "__main__":
     try:
         run_server()
     except KeyboardInterrupt:
+        GPIO.cleanup()
         print("Server closed.")
