@@ -122,15 +122,15 @@ def read_data():
     t1 = time.perf_counter()
     dist = round(readDistance(), 2)
     t2 = time.perf_counter()
-    #cpu_percents = []
-    #for iter in range(1):
-    #    cpu_percents.append(monitor_cpu(target=readDistance()))
-    #Sum = sum(cpu_percents)
-    #total = len(cpu_percents)
-    #pcpuDist = round((Sum / total), 2)
-    pid = os.getpid()
-    p = psutil.Process(pid)
-    pcpuDist = p.cpu_percent(interval=4.0)
+    cpu_percents = []
+    for iter in range(1):
+        cpu_percents.append(monitor_cpu(target=readDistance()))
+    Sum = sum(cpu_percents)
+    total = len(cpu_percents)
+    pcpuDist = round((Sum / total), 2)
+    #pid = os.getpid()
+    #p = psutil.Process(pid)
+    #pcpuDist = p.cpu_percent(interval=4.0)
     tpoDist = round((t2 - t1), 2)
 
     DistSensor = {"value": dist, "cpu": pcpuDist, "time": tpoDist}
