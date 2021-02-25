@@ -14,15 +14,17 @@ import psutil
 import smbus
 import math
 
-def readGyroscope():
-    power_mgmt_1 = 0x6b
-    power_mgmt_2 = 0x6c
+power_mgmt_1 = 0x6b
+power_mgmt_2 = 0x6c
 
-    bus = smbus.SMBus(1) # bus = smbus.SMBus(0) fuer Revision 1
-    address = 0x68       # via i2cdetect
+bus = smbus.SMBus(1) # bus = smbus.SMBus(0) fuer Revision 1
+address = 0x68       # via i2cdetect
+
+def readGyroscope():
+
  
     # Aktivieren, um das Modul ansprechen zu koennen
-    us.write_byte_data(address, power_mgmt_1, 0)
+    bus.write_byte_data(address, power_mgmt_1, 0)
     
     x = read_word_2c(0x43)
     y = read_word_2c(0x45)
