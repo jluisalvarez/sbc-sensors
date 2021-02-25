@@ -1,2 +1,2 @@
-# Monitoring Sensors os SBCs with Python
+# Monitoring Sensors on SBCs with Python
 
