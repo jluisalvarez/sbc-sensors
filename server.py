@@ -121,7 +121,7 @@ def read_data():
     t2 = time.perf_counter()
     cpu_percents = []
     for iter in range(1):
-        cpu_percents.append(monitor_cpu(target=readDistance)
+        cpu_percents.append(monitor_cpu(target=readDistance))
     Sum = sum(cpu_percents)
     total = len(cpu_percents)
     pcpuDist = round((Sum / total), 2)
