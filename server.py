@@ -135,7 +135,7 @@ def read_data():
     data = {
         "temperatureSensor": TempSensor,
         "humiditySensor": HumSensor,
-        "UltrasocinSensor": DistSensor,
+        "ultrasocicSensor": DistSensor,
     }
     return data
 
