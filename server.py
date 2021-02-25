@@ -46,7 +46,7 @@ def read_data():
     tpoTemp = round((t2-t1),2)
 
     TempSensor = {
-        "Temperat": temp,
+        "Temperature": temp,
         "pcpuTemperature": pcpuTem,
         "tpoTemperature": tpoTemp,
     }
@@ -62,13 +62,18 @@ def read_data():
     pcpuHum = round((Sum/total),2)
     tpoHum = round((t2-t1),2)
 
+    HumSensor = {
+        "Humidity": hum,
+        "pcpuHumidity": pcpuHum,
+        "tpoHumidity": tpoHum
+    }
+
+
 
 
     data = {
         "temperatureSensor": TempSensor,
-        "Humidity": hum,
-        "pcpuHumidity": pcpuHum,
-        "tpoHumidity": tpoHum
+        "humiditySensor": HumSensor,
     }
     return data
 
