@@ -7,10 +7,60 @@ import os
 import json
 import time
 import psutil
+import RPi.GPIO as GPIO
 
+# Ultrasonic Sensor HC-SR04
+# GPIO 
+# PIN: RBPi --> TRIG=25, ECHO=24     BBB -->
+def readDistance():
+    TRIG = 25 
+    ECHO = 24 
+
+    GPIO.setmode(GPIO.BCM)                
+    GPIO.setup(TRIG, GPIO.OUT)  
+    GPIO.setup(ECHO, GPIO.IN)
+
+    # Ponemos en bajo el pin TRIG y después esperamos 0.5 seg para que el transductor se estabilice
+    GPIO.output(TRIG, GPIO.LOW)
+    time.sleep(0.5)
+
+    #Ponemos en alto el pin TRIG esperamos 10 uS antes de ponerlo en bajo
+    GPIO.output(TRIG, GPIO.HIGH)
+    time.sleep(0.00001)
+    GPIO.output(TRIG, GPIO.LOW)
+
+    # En este momento el sensor envía 8 pulsos ultrasónicos de 40kHz y coloca su pin ECHO en alto
+    # Debemos detectar dicho evento para iniciar la medición del tiempo
+        
+    while True:
+        pulso_inicio = time.time()
+        if GPIO.input(ECHO) == GPIO.HIGH:
+            break
+
+    # El pin ECHO se mantendrá en HIGH hasta recibir el eco rebotado por el obstáculo. 
+    # En ese momento el sensor pondrá el pin ECHO en bajo.
+
+	# Prodedemos a detectar dicho evento para terminar la medición del tiempo
+        
+    while True:
+        pulso_fin = time.time()
+        if GPIO.input(ECHO) == GPIO.LOW:
+            break
+
+    # Tiempo medido en segundos
+    duracion = pulso_fin - pulso_inicio
+
+    #Obtenemos la distancia considerando que la señal recorre dos veces la distancia a medir y que la velocidad del sonido es 343m/s
+    distancia = (34300 * duracion) / 2
+
+    return distancia
+
+
+
+# Temperature Sensor DS18B20
 from w1thermsensor import W1ThermSensor
 # 1-wired
-# PIN: RBPi=GPIO4    BBB=9_12
+# PIN: RBPi --> default Pin GPIO4    BBB --> default Pin 9_12
 sensor = W1ThermSensor()
 
 def readTemperature():
@@ -68,10 +118,28 @@ def read_data():
         "time": tpoHum
     }
 
+    t1 = time.perf_counter()
+    dist = round(readDistance(), 2)
+    t2 = time.perf_counter()
+    cpu_percents = []
+    for iter in range(1):
+        cpu_percents.append(monitor_cpu(target=readDistance()))
+    Sum = sum(cpu_percents)
+    total = len(cpu_percents)
+    pcpuDist = round((Sum/total),2)
+    tpoDist = round((t2-t1),2)
+
+    DistSensor = {
+        "value": dist,
+        "cpu": pcpuDist,
+        "time": tpoDist
+    }
+
 
     data = {
         "temperatureSensor": TempSensor,
         "humiditySensor": HumSensor,
+        "UltrasocinSensor": DistSensor,
     }
     return data
 
