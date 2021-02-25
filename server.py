@@ -33,6 +33,7 @@ def readHumidity():
 
 def read_data():
 
+
     t1 = time.perf_counter()
     hum = round(readHumidity(), 2)
     t2 = time.perf_counter()
@@ -43,6 +44,11 @@ def read_data():
     total = len(cpu_percents)
     pcpuHum = round((Sum/total),2)
     tpoHum = round((t2-t1),2)
+    TempSensor = {
+        "Temperat": temp,
+        "pcpuTemperature": pcpuTem,
+        "tpoTemperature": tpoTemp,
+    }
 
     t1 = time.perf_counter()
     temp = round(readTemperature(), 2)
@@ -58,9 +64,7 @@ def read_data():
 
 
     data = {
-        "Temperature": temp,
-        "pcpuTemperature": pcpuTem,
-        "tpoTemperature": tpoTemp,
+        "temperatureSensor": TempSensor,
         "Humidity": hum,
         "pcpuHumidity": pcpuHum,
         "tpoHumidity": tpoHum
