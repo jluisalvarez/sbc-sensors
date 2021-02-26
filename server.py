@@ -200,7 +200,7 @@ def read_data():
     Sum = sum(cpu_percents)
     total = len(cpu_percents)
     pcpuGyr = round((Sum / total), 4)
-    timeGyr = round((t2 - t1), 2)
+    timeGyr = round((t2 - t1), 4)
 
     GyrSensor = {"value": gyr, "cpu": pcpuGyr, "time": timeGyr}
 
