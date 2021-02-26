@@ -170,7 +170,7 @@ def read_data():
         cpu_percents.append(monitor_cpu(target=readHumidity))
     Sum = sum(cpu_percents)
     total = len(cpu_percents)
-    pcpuHum = round((Sum / total), 2)
+    pcpuHum = round((Sum / total), 4)
     tpoHum = round((t2 - t1), 2)
 
     HumSensor = {"value": hum, "cpu": pcpuHum, "time": tpoHum}
@@ -183,7 +183,7 @@ def read_data():
         cpu_percents.append(monitor_cpu(target=readDistance))
     Sum = sum(cpu_percents)
     total = len(cpu_percents)
-    pcpuDist = round((Sum / total), 2)
+    pcpuDist = round((Sum / total), 4)
     #pid = os.getpid()
     #p = psutil.Process(pid)
     #pcpuDist = p.cpu_percent(interval=4.0)
@@ -199,10 +199,10 @@ def read_data():
         cpu_percents.append(monitor_cpu(target=readGyroscope))
     Sum = sum(cpu_percents)
     total = len(cpu_percents)
-    pcpuGyr = round((Sum / total), 2)
-    pcpuGyr = round((t2 - t1), 2)
+    pcpuGyr = round((Sum / total), 4)
+    timeGyr = round((t2 - t1), 2)
 
-    GyrSensor = {"value": gyr, "cpu": pcpuGyr, "time": pcpuGyr}
+    GyrSensor = {"value": gyr, "cpu": pcpuGyr, "time": timeGyr}
 
     data = {
         "temperatureSensor": TempSensor,
